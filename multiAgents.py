@@ -82,10 +82,9 @@ class ReflexAgent(Agent):
 
         score = 0
 
-        # closestGhostPosition = newGhostStates[0].configuration.pos
-        # closestGhost = manhattanDistance(newPos, closestGhostPosition)
-        # newGhostPositions = newGhostStates.asList()
-        ghostDistances = [manhattanDistance(newPos, ghostPosition.getPosition()) for ghostPosition in newGhostStates]
+        # Minimize distance from pacman to ghosts
+        ghostDistances = [manhattanDistance(
+          newPos, ghostPosition.getPosition()) for ghostPosition in newGhostStates]
 
         closestGhost  = min(ghostDistances)
 
