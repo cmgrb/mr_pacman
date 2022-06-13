@@ -12,6 +12,7 @@
 # Pieter Abbeel (pabbeel@cs.berkeley.edu).
 
 
+from curses import isendwin
 from util import manhattanDistance
 from game import Directions
 import random, util
@@ -75,18 +76,23 @@ class ReflexAgent(Agent):
 
         "*** YOUR CODE HERE ***"
         # return successorGameState.getScore()
+
+        if successorGameState.isWin():
+            return 99999999
+
         score = 0
 
-        closestGhostPosition = newGhostStates[0].configuration.pos
-        closestGhost = manhattanDistance(newPos, closestGhostPosition)
+        # closestGhostPosition = newGhostStates[0].configuration.pos
+        # closestGhost = manhattanDistance(newPos, closestGhostPosition)
+        # newGhostPositions = newGhostStates.asList()
+        ghostDistances = [manhattanDistance(newPos, ghostPosition.getPosition()) for ghostPosition in newGhostStates]
+
+        closestGhost  = min(ghostDistances)
 
         # Minimize distance from pacman to food
         newFoodPositions = newFood.asList()
         foodDistances = [manhattanDistance(
             newPos, foodPosition) for foodPosition in newFoodPositions]
-
-        if len(foodDistances) == 0:
-            return 50
 
         closestFood = min(foodDistances)
 
